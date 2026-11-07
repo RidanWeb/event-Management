@@ -1,0 +1,178 @@
+{% extends "header/header.html" %}
+
+
+{% load static %}
+
+
+
+{% block title %} Let's Talk {% endblock title %}
+
+
+{% block body %}
+  
+
+    <section class="flex items-center justify-center banner bg-cover bg-center bg-no-repeat min-h-[calc(100vh-95px)] w-full"
+    style="background-image: linear-gradient(to right, rgba(62,15,141,0.85), rgba(149,100,221,0.6)), url(&quot;{% static 'images/banner.jpg' %}&quot;);" >  
+        <div class="banner-content text-center">
+            <h1 class="mb-4 text-4xl font-bold sm:text-5xl md:text-6xl">
+            Architecting the <span class="bg-gradient-to-r from-[#E4DA72] to-[#EEEEEE] bg-clip-text text-transparent">Next Digital Era</span>
+            </h1>
+
+            <p class="mb-8 text-base text-purple-200 sm:text-lg md:text-xl">
+            Connect with world-class engineers, AI innovators, and tech visionaries. Explore keynotes, hands-on workshops, and future-defining tech.
+            </p>
+
+
+
+
+            <a href="#events" class="button text-lg font-semibold border-1 border-whi text-white">
+                Explore Events
+            </a>
+
+            <!-- <button type="submit" class="button text-base font-semibold px-2 py-1 text-[#3E0F8D] border-1 border-[#3E0F8D] shadow-md"> Search </button> -->
+        </div>    
+            
+        
+  </section>
+    <!-- banner end -->
+
+
+<!-- event card start-->
+<section id="events" class="events-card bg-gradient-to-b from-[#3E0F8D] to-[#8D5DD6], py-16 px-4 sm:px-6 lg:px-8 text-white min-h-screen">
+  <div class="mx-auto max-w-7xl">
+    
+    <!-- Section Header -->
+    <div class="mb-12 text-center">
+      <h2 class="text-3xl font-extrabold tracking-tight sm:text-4xl md:text-5xl">
+        All <span class="bg-gradient-to-r from-[#E4DA72] to-[#9564DD] bg-clip-text text-transparent">Events</span>
+      </h2>
+      <p class="mt-3 text-white text-slate-400 sm:text-lg">
+        Explore upcoming tech keynotes, hands-on workshops, and developer summits.
+      </p>
+    </div>
+
+    <!-- Filters & Search Bar -->
+    <div class="mb-10 flex flex-col items-center justify-between gap-4 md:flex-row">
+      <!-- Search Input -->
+      <form class="card_search flex w-full max-w-xl border bg-white" action="{% url 'home' %}#events" method="GET">
+          <input 
+              placeholder="Search by event name or location..." name="search" value="{{ request.GET.search }}" 
+              class="w-full bg-transparent px-5 py-2.5 text-sm sm:text-base text-gray-900 placeholder-gray-500 focus:outline-none"
+          />
+          <button type="submit" class="button text-base font-semibold px-2 py-1 text-[#3E0F8D] border-1 border-[#3E0F8D] shadow-md"> Search </button>
+      </form>
+
+      <!-- Category Filter Pills -->
+      <div class="flex w-full flex-wrap gap-2 overflow-x-auto pb-2 md:w-auto md:pb-0">
+
+        <a href="{% url 'home' %}?type=all#events"><button class="card_tab text-lg font-semibold">All</button></a>
+        <a href="{% url 'home' %}?type=ai-ml#events"><button class="card_tab text-lg font-semibold">AI & ML</button></a>
+        <a href="{% url 'home' %}?type=web-dev#events"><button class="card_tab text-lg font-semibold">Web Dev</button></a>
+        <a href="{% url 'home' %}?type=cybersecurity#events"><button class="card_tab text-lg font-semibold">Cybersecurity</button></a>
+        <a href="{% url 'home' %}?type=cloud#events"><button class="card_tab text-lg font-semibold">Cloud</button></a>
+      </div>
+    </div>
+
+    <!-- Events Grid -->
+
+      <!-- Event Card 1 -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"> 
+        
+        {% for event in events %}
+        
+          <article class="flex flex-col justify-between overflow-hidden border border-slate-800 border-white/10 bg-white rounded-sm p-6 backdrop-blur-md shadow-xl">
+            <div>
+              <h3 class="mb-3 text-xl font-bold text-[#3E0F8D]">
+                {{ event.name }}
+              </h3>
+
+              <p class="mb-6 text-sm line-clamp-3 text-black/70">
+                {{ event.description }}
+              </p>
+            </div>
+
+            <div class="add_info flex justify-between text-black/70">
+              <span><span class="font-semibold font-[#3E0F8D]">Category:</span> {{ event.category }}</span>
+              <span><span class="font-semibold font-[#3E0F8D]">Participants:</span> {{event.total_participants}}</span>
+            </div>
+
+            <div class="border-t border-slate-700/60 pt-4">
+              <div class="space-y-2 text-sm text-black">
+                <div class="flex items-center gap-2">
+                  <svg class="h-4 w-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                  </svg>
+                  <span>{{ event.date }}</span>
+                </div>
+
+                <div class="flex items-center gap-2">
+                  <svg class="h-4 w-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                  </svg>
+                  <span>{{ event.time|date:"h:i A T" }}</span>
+                </div>
+
+                <div class="flex items-center gap-2">
+                  <svg class="h-4 w-4 text-purple-400" fill="none" stroke="currentColor"
+                    viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 21a2 2 0 0 1-1.41-.59l-4.24-4.24a8 8 0 1 1 11.31 0l-4.24 4.24A2 2 0 0 1 12 21zm0-7a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                </svg>
+                  <span>Location : {{ event.location }}</span>
+                </div>
+
+              </div>
+
+              <!-- Action Button -->
+              <a href="{% url 'event-details' event.id %}">
+                <button type="submit" class="button text-base w-full mt-4 font-semibold px-2 py-1 text-[#3E0F8D] border-1 border-[#3E0F8D] shadow-md"> Show Details </button>
+              </a>
+            </div>
+          </article>
+
+        {% endfor %}
+      </div>
+
+      <!-- Pagination Controls -->
+       {% if events.has_other_pages %}
+        <nav class="flex items-center justify-center border-t border-gray-200 pt-6 mt-8">
+          <!-- Previous Button -->
+          <div>
+            {% if events.has_previous %}
+              <a href="?page={{ events.previous_page_number }}#events" class="px-4 py-2 text-sm font-semibold text-[#3E0F8D] border border-[#3E0F8D] rounded-sm hover:bg-[#3E0F8D] hover:text-white transition">
+                &laquo; Previous
+              </a>
+            {% else %}
+              <span class="px-4 py-2 text-sm font-semibold text-gray-400 border border-gray-200 rounded-sm cursor-not-allowed">
+                &laquo; Previous
+              </span>
+            {% endif %}
+          </div>
+
+          <!-- Page Number Status -->
+          <span class="text-sm text-gray-700">
+            Page <span class="font-semibold">{{ events.number }}</span> of <span class="font-semibold">{{ events.paginator.num_pages }}</span>
+          </span>
+
+          <!-- Next Button -->
+          <div>
+            {% if events.has_next %}
+              <a href="?page={{ events.next_page_number }}#events" class="px-4 py-2 text-sm font-semibold text-[#3E0F8D] border border-[#3E0F8D] rounded-sm hover:bg-[#3E0F8D] hover:text-white transition">
+                Next &raquo;
+              </a>
+            {% else %}
+              <span class="px-4 py-2 text-sm font-semibold text-gray-400 border border-gray-200 rounded-sm cursor-not-allowed">
+                Next &raquo;
+              </span>
+            {% endif %}
+          </div>
+        </nav>
+      {% endif %}
+      <!-- Pagination Controls -->
+
+
+  </div>
+</section>
+<!-- event card end-->
+
+
+{% endblock body %}

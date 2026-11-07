@@ -1,0 +1,41 @@
+
+{% extends "header/dashboardheader.html" %}
+
+
+{% load static %}
+
+
+
+{% block title %} Event Dashboard {% endblock title %}
+
+
+{% block dashBody %}
+    <div class="w-1/2 mx-auto mt-10 p-10 border border-gray-300 rounded-lg bg-white">
+        <div>
+            {% if messages %}
+                    
+                {% for message in messages %}
+                    <div class="px-3 py-3 rounded-4 text-white font-semibold {% if message.tags == 'success' %} bg-green-600 {% endif %}">{{message}}</div>
+                {% endfor %}
+                    
+            {% endif %}
+        </div>
+
+        <form method="POST">
+            {% csrf_token %}
+            
+            {{ eventForm.as_p }}
+            <!-- {{ categoryForm.as_p }} -->
+
+
+            <button type="submit" class="btn mt-4 bg-red-500 hover:bg-red-200 hover:text-black text-white font-bold py-2 px-8 rounded">
+                Submit
+            </button>
+
+
+
+        </form>
+    </div>
+{% endblock dashBody %}
+
+

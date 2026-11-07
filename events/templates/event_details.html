@@ -1,0 +1,81 @@
+{% extends "header/header.html" %}
+
+
+{% load static %}
+
+
+
+{% block title %} Let's Talk {% endblock title %}
+
+
+{% block body %}
+
+    <!-- banner start -->
+    <section class="flex items-center justify-center banner bg-cover bg-center bg-no-repeat sm:bg-contain md:bg-cover min-h-[calc(100vh-95px)] w-full" style="background-image: linear-gradient(to right, rgba(62,15,141,0.85), rgba(149,100,221,0.6)), url(&quot;{% static 'images/banner.jpg' %}&quot;);" >
+
+        <div class="banner-content text-center">
+            <h2 class="tracking-[0.7em] mb-5 text-lg font-semibold uppercase text-white">Single Event</h2>
+            <h1 class="mb-[1em] text-4xl font-bold sm:text-5xl md:text-6xl bg-gradient-to-r from-[#E4DA72] to-[#EEEEEE] bg-clip-text text-transparent">
+             {{ event.name }}
+            </h1>
+
+            <a href="#event-details" class="button text-lg font-semibold border-1 border-white text-white">
+                Explore This Events
+            </a>
+
+            <!-- <button type="submit" class="button text-base font-semibold px-2 py-1 text-[#3E0F8D] border-1 border-[#3E0F8D] shadow-md"> Search </button> -->
+        </div>    
+            
+        
+    </section>
+    <!-- banner end -->
+
+    <!-- events details -->
+     <section id="event-details" class="event-details w-9/12 mx-auto py-16 px-4 sm:px-6 lg:px-8">
+        <h2 class="flex items-center gap-2 text-lg font-semibold text-white">
+            <svg class="h-6 w-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385c.116.488-.42.87-.837.618L12 17.83l-4.726 2.716c-.417.24-.953-.13-.837-.618l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602c-.38-.325-.178-.948.32-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z"/>
+            </svg>
+            <span class="text-black">Event Details</span>
+        </h2>
+        <h1 class="event-title text-black font-bold text-2xl my-5">{{ event.name }}
+            <span class="text-lg font-semibold text-purple-400 mb-4"> - ({{event.category}})</span>
+        </h1>
+        
+        <div class="add_info flex gap-4 flex-wrap">
+
+            <div class="date bg-[#3E0F8D] p-4"><p class="text-[#757D6F]">EventDate</p><h2 class="text-white font-semibold">{{ event.date }}</h2></div>
+
+            <div class="time bg-[#3E0F8D] p-4"><p class="text-[#757D6F]">EventTime</p><h2 class="text-white font-semibold">{{ event.time|date:"h:i A T" }}</h2></div>
+
+            <div class="location bg-[#3E0F8D] p-4"><p class="text-[#757D6F]">EventLocation</p><h2 class="text-white font-semibold">{{ event.location }}</h2></div>
+
+        </div>
+
+        <div class="event-description my-5">
+            <p class="text-black text-justify">{{ event.description }}</p>
+
+        </div>
+
+        <div class="participent">
+            <h2 class="text-black font-semibold text-lg mb-3">Participents :</h2>
+            <div class="flex flex-col gap-4 flex-wrap">
+                
+                {% for participent in event.participants.all %}
+                    <div class="participent-card bg-[#3E0F8D] p-4 w-48 text-wrap">
+                        <h3 class="text-white font-semibold">{{ participent.name }}</h3>
+                        <p class="text-[#757D6F] truncate ">{{ participent.email }}</p>
+                    </div>
+                {% endfor %}
+                    
+                
+
+            </div>
+        </div>
+
+
+     </section>
+    <!-- events details -->
+
+
+{% endblock body %}

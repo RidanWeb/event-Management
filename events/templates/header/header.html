@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Let's Talk</title>
+    <link rel="icon" type="image/x-icon" href="{% static 'images/logo.png' %}">
+
+    <link rel="stylesheet" href="{% static 'css/output.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+    <!-- header start -->
+    <header class="bg-gradient-to-t from-[#3E0F8D] to-[#9564DD] text-white">
+        <nav class="flex justify-between items-center px-5 py-2 relative">
+            <!-- Logo -->
+            <div class="logo w-24 h-24 p-2">
+                <img src="{% static 'images/logo.png' %}" alt="Let's Talk Logo" class="h-full w-full object-contain">
+            </div>
+
+            <!-- Desktop Menu (Hidden on mobile, visible on desktop md+) -->
+            <ul class="menu hidden md:flex items-center gap-5 text-white text-lg">
+                <li><a href="/">Home</a></li>
+                <li><a href="/#events">Events</a></li>
+                <li><a href="/admin-dashboard">Dashboard</a></li>
+                <li><a href="/contact">Contact</a></li>
+            </ul>
+
+            <!-- Simple Hamburger Button (Visible on mobile, hidden on desktop md+) -->
+            <button id="mobile-menu-btn" 
+                    type="button" 
+                    class="block md:hidden text-3xl px-3 py-1 focus:outline-none cursor-pointer leading-none">
+                &#9776;
+            </button>
+        </nav>
+
+        <!-- Mobile Dropdown Menu (Hidden by default) -->
+        <div id="mobile-menu" class="hidden md:hidden bg-[#3E0F8D] border-t border-[#9564DD]/40 px-5 py-4">
+            <ul class="menu flex flex-col w-1/2 ml-auto gap-3 text-white text-base">
+                <li><a href="/" class="block w-full">Home</a></li>
+                <li><a href="/#events" class="block w-full">Events</a></li>
+                <li><a href="/admin-dashboard" class="block w-full">Dashboard</a></li>
+                <li><a href="/contact" class="block w-full">Contact</a></li>
+            </ul>
+        </div>
+    </header>
+    <!-- header end -->
+
+    {% block body %}
+    {% endblock body %}
+
+    <!-- Scripts -->
+    <script src="{% static 'js/query.js' %}"></script>
+</body>
+</html>

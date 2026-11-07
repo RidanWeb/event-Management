@@ -1,0 +1,55 @@
+.menu li a, .button {
+  display: inline-block;
+  text-decoration: none;
+  position: relative;
+  background: linear-gradient(120deg, #9564DD 0%, #333399 100%);
+  background-repeat: no-repeat;
+  background-size: 100% 0.2em;
+  padding: 0.4em 1em;
+  background-position: 0 100%;
+  transition: background-size 0.25s ease-in;
+}
+
+.menu li a:hover, .button:hover {
+  background-size: 100% 100%;
+  color: white;
+}
+
+.card_tab {
+  position: relative;
+  background: linear-gradient(120deg, #9564DD 0%, #333399 100%);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  padding: 0.4em 1em;
+  background-position: 0 100%;
+  transition: background-size 0.25s ease-in;
+}
+
+.card_tab:hover {
+  background-size: 100% 0.2em;
+}
+
+.active {
+  background: linear-gradient(120deg, #9564DD 0%, #333399 100%);
+  color: white !important;
+}
+
+.dashEventGrid:hover {
+  background: linear-gradient(120deg, #9564DD 0%, #333399 100%);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  color: white !important;
+  transition: background-size 0.25s ease-in;
+}
+
+/* Fallback breakpoint to ensure desktop mode never shows the mobile button */
+@media (min-width: 768px) {
+  #mobile-menu-btn,
+  #mobile-menu {
+    display: none !important;
+  }
+  
+  ul.menu.hidden {
+    display: flex !important;
+  }
+}
