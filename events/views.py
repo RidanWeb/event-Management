@@ -152,7 +152,7 @@ def create_event(request):
         'eventForm': eventForm, 
         # 'categoryForm': categoryForm
     }
-    return render(request, 'Dashboard/CreateEvent.html', context)
+    return render(request, 'dashboard/CreateEvent.html', context)
 
 
 def delete_event(request, event_id):
@@ -176,7 +176,7 @@ def update_event(request, event_id):
         'eventForm': eventForm,
         'event': event
     }
-    return render(request, 'Dashboard/CreateEvent.html', context)
+    return render(request, 'dashboard/CreateEvent.html', context)
 
 # def create_event(request):
 #     if request.method == 'POST':
