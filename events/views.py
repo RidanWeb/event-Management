@@ -123,7 +123,7 @@ def admin_dashboard(request):
         'count': count
     }
     
-    return render(request, 'Dashboard/AdminDashboard.html', context )
+    return render(request, 'dashboard/AdminDashboard.html', context )
 
 
 
