@@ -1,0 +1,313 @@
+1. Create virtual environment { python -m venv task_env }
+
+2. Activate Environment { task_env/scripts/activate / (task_env\Scripts\activate)task_env/scripts/activate.bat }
+	
+	[ if 
+		PS F:\Ridan All\Ridan\Phitron\Development-With-Python		\Django\task-management> task_env/scripts/activate
+		task_env/scripts/activate : File F:\Ridan
+		All\Ridan\Phitron\Development-With-Python\Django\task-		management\task_env\scripts\Activate.ps1 cannot be 		loaded
+		because running scripts is disabled on this system. For 		more information, see about_Execution_Policies at
+		https:/go.microsoft.com/fwlink/?LinkID=135170.
+		At line:1 char:1
+		+ task_env/scripts/activate
+		+ ~~~~~~~~~~~~~~~~~~~~~~~~~
+    		+ CategoryInfo          : SecurityError: (:) [], 			PSSecurityException
+    		+ FullyQualifiedErrorId : UnauthorizedAccess
+	]
+	this error occure then run { Set-ExecutionPolicy -	ExecutionPolicy RemoteSigned -Scope CurrentUser } this in 	powershell
+
+3.Install Django { pip install Django }
+
+	to check Django installed { pip list }
+
+
+4. Create a Django project { django-admin startproject task_management . }
+
+5. Create application { django-admin startapp tasks [appName] }
+
+6. work with view on tasks 
+7. then url in task_management
+
+8. Run server { python manage.py runserver }
+
+9. Create an urls.py in each app then define url here for this app
+then it include it main url in main task_management project
+
+10. Create a requirement.txt for making this virtual environment portable  { pip freeze > requirements.txt  }
+
+after that whenever we move this project another drive or pc we can delete the environment variable then create an new one using {python -m venv task_env} then activate this one using {task_env/scripts/activate}
+
+then install requirement.txt { pip install -r requirement.txt }
+
+
+11.  Ctr + shift + p (virtual env activation)
+
+
+12. create template folder in tasks app
+
+13. create static folder in root for image, css, js
+STATICFILES_DIRS = [
+    
+    BASE_DIR / 'static',
+]
+
+add this code in setting.py of root
+
+14. create package.json file in root and paste 
+	(
+		{
+  "devDependencies": {
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.16"
+  },
+  "scripts": {
+    "build:tailwind": "npx tailwindcss -i ./static/css/tailwind.css -o ./static/css/output.css --minify",
+    "watch:tailwind": "npx tailwindcss -i ./static/css/tailwind.css -o ./static/css/output.css --watch"
+  }
+}
+
+
+) this code here for install tailwind css in our project. then open terminal in vs code and command : npm install
+
+npx tailwindcss init
+
+
+15. Modify tailwind.config.js
+
+
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+
+    "./templates/**/*.html",
+    "./**/templates/**/*.html",
+    "./static/**/*.js",
+    "./**/*.py",
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+}
+
+
+
+
+
+16. create a file named : postcss.config.js and add some code here
+
+
+module.exports = {
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {},
+  },
+};
+
+
+17. add input.css in static folder css folder
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+18. then run : npm run build:tailwind /  npm run watch:tailwind
+
+
+
+=============================Front End ====================================
+
+
+
+19. Explore Django template tags  *************************************************8
+
+
+
+
+
+20. postgres connection in Django
+	create an database then add some code in setting.py in task_management
+PGadmin password : 12345
+	then install a package for using postgres { psycopg-binary } https://pypi.org/project/psycopg-binary/  :  pip install psycopg-binary
+
+	if get error after migration error use this one : pip install psycopg2-binary
+
+
+
+21. Add Task class in task app's model.py 
+
+class Task(models.Model):
+     
+    title = models.CharField(max_length=100)
+    description = models.TextField()
+    due_date = models.DateField()
+    is_completed = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+
+then command in cmd: 
+1. python manage.py makemigrations
+2. python manage.py migrate
+
+
+for fake data 
+
+$ python populate_db.py
+
+
+
+22. Then create Task details class in same file
+
+then command in cmd: 
+1. python manage.py makemigrations
+2. python manage.py migrate
+
+
+
+
+23. python manage.py shell (from test database tables values)
+
+from tasks.models import Task
+
+t = Task(title="Low Perioty task", description="This is first task", due_date="2026-12-25")
+
+Project.objects.create(name="Demo Project", start_date="2026-12-15")
+
+project=Project.objects.all()
+project.first().id
+
+t.title
+
+t.save()
+
+
+|
+|
+|
+|
+|
+|
+|
+
+
+24. Django ORM : django debug toolbar ( https://django-debug-toolbar.readthedocs.io/en/latest/ )
+
+follow all the steps to install debug tools
+
+25. modify models.py and delete database from pgAdmin and delete all file from migrations instead __init__.py then create database with same database name
+and then makemigration and migrate.
+
+
+26. insert some data in database using populate_db.py file 
+
+for this we have to install faker package { faker python } pip install Faker
+	
+	python populate_db.py
+
+	or
+
+	1. python manage.py shell
+	2. from populate_db import populate_db
+	3. populate_db()
+
+
+
+
+
+
+27. Queryset api or lookupapi for get, filter, and many more functions
+
+https://docs.djangoproject.com/en/6.0/ref/models/querysets/
+
+
+
+
+gitIgnore file:
+
+PowerShell
+New-Item .gitignore
+
+
+
+
+
+
+Deployment:
+
+https://render.com/
+
+create database and get External Database URL
+
+Setting.py:
+
+ALLOWED_HOSTS = ['*']
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://*.onrender.com',
+    'http://127.0.0.1:8000',
+    'http://localhost:8000',
+    
+    ]
+
+https://render.com/docs/deploy-django
+
+
+DATABASES = {
+    'default': dj_database_url.config(
+        # Replace this value with your local database's connection string.
+        default='postgresql://event_db_k37v_user:ofP1KvFjw25Z0vl68Wqk1hXYokFT6TCy@dpg-dbo0ctijnfac73diuieg-a.oregon-postgres.render.com/event_db_k37v',
+        conn_max_age=600
+    )
+}
+
+
+
+$ pip install dj-database-url psycopg2-binary
+$ pip freeze > requirements.txt
+
+
+import dj_database_url
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
