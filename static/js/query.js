@@ -23,6 +23,23 @@
 
 
 
+const userBtn = document.getElementById("user-menu-btn");
+    const userDropdown = document.getElementById("user-dropdown");
+
+    if (userBtn && userDropdown) {
+        userBtn.addEventListener("click", function (e) {
+            e.stopPropagation();
+            userDropdown.classList.toggle("hidden");
+        });
+
+        // Close dropdown if user clicks outside
+        document.addEventListener("click", function () {
+            userDropdown.classList.add("hidden");
+        });
+    }
+
+
+
 
 
 const menuBtn = document.getElementById('mobile-menu-btn');
@@ -47,3 +64,6 @@ menuBtn.addEventListener('click', () => {
 //   });
 
 // });
+
+
+

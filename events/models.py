@@ -1,4 +1,10 @@
 from django.db import models
+from django.db.models.signals import post_save, pre_save
+from django.dispatch import receiver
+from django.core.mail import send_mail
+
+
+
 
 # Create your models here.
 
@@ -41,3 +47,36 @@ class Participant(models.Model):
 
     def __str__(self):
         return self.name
+    
+    
+    
+    #Signals 
+    
+    # @receiver(post_save, sender=Event)
+    # def send_email_notification(sender, instance, created, **kwargs):
+    #     if created:
+    #         print(f"New event created: {instance.name}. Sending email notifications to participants...")
+    #         print(f"Sender: {sender}, Instance: {instance}, Created: {created}")
+            
+    #         instance.save()
+            
+            
+    # @receiver(pre_save, sender=Event)
+    # def send_email_notification(sender, instance, **kwargs):
+        
+    #     print(f"New event created: {instance.name}. Sending email notifications to participants...")
+    #     print(f"Sender: {sender}, Instance: {instance}")
+    
+    
+    
+    @receiver(post_save, sender=Event)
+    def send_email_notification(sender, instance, created, **kwargs):
+        if created:
+            assigned_email = [participant.email for participant in instance.participants.all()]
+            send_mail(
+                subject=f"New Event Created: {instance.name}",
+                message=f"A new event has been created: {instance.name}.",
+                from_email="redankabir.cse@gmail.com",
+                recipient_list=assigned_email,
+            )
+            instance.save()

@@ -6,6 +6,13 @@ from events.models import Event
 
 
 class StyledFormMixin:
+    
+    
+    #style the form fields using the StyledFormMixin
+    def __init__(self, *args, **kwargs):
+        # employees = kwargs.pop('employees', []) 
+        super().__init__(*args, **kwargs)
+        self.apply_style_widget()
         
     default_class = "w-full border-4 border-gray-300 rounded-lg shadow-sm py-2 focus:border-red-500 transition duration-700 ease-in-out focus:outline-none"
     default_class2 = "py-2 mb-2 focus:border-red-500 focus:outline-none"
@@ -36,6 +43,24 @@ class StyledFormMixin:
                     'class': self.default_class,
                     'placeholder': f'Enter {field_name.replace("_", " ").title()}',
                     'rows': 5
+            })
+            elif isinstance(field.widget, forms.EmailInput):
+                placeholder_text = placeholders.get(
+                    field_name, 
+                    f'Enter {field_name.replace("_", " ").title()}'
+                )
+                field.widget.attrs.update({
+                    'class': self.default_class,
+                    'placeholder': placeholder_text,
+            })
+            elif isinstance(field.widget, forms.PasswordInput):
+                placeholder_text = placeholders.get(
+                    field_name, 
+                    f'Enter {field_name.replace("_", " ").title()}'
+                )
+                field.widget.attrs.update({
+                    'class': self.default_class,
+                    'placeholder': placeholder_text,
             })
             elif isinstance(field.widget, forms.SelectDateWidget):
                 placeholder_text = placeholders.get(
@@ -70,11 +95,13 @@ class EventModelForm(StyledFormMixin, forms.ModelForm):
         # }
        
        
-    #style the form fields using the StyledFormMixin
-    def __init__(self, *args, **kwargs):
-        # employees = kwargs.pop('employees', []) 
-        super().__init__(*args, **kwargs)
-        self.apply_style_widget()
+       
+    #    Move to the StyledFormMixin class to apply styling to the form fields
+    # #style the form fields using the StyledFormMixin
+    #     def __init__(self, *args, **kwargs):
+    #         # employees = kwargs.pop('employees', []) 
+    #         super().__init__(*args, **kwargs)
+    #         self.apply_style_widget()
             
         
 

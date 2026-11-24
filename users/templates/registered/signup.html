@@ -1,0 +1,85 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="{% static 'css/output.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+    <h2 class="text-2xl font-bold mb-4 text-center">Sign Up</h2>
+
+    <form method="post" action="" class="w-1/2 max-w-sm mx-auto my-5 bg-white p-8 rounded-lg shadow-md">
+        {% csrf_token %}
+
+        <div>
+            {% if messages %}
+                    
+                {% for message in messages %}
+                    <div id="alert-msg" class="px-3 py-3 rounded-4 text-white font-semibold {% if message.tags == 'success' %} bg-green-600 {% endif %}">{{message}}</div>
+                {% endfor %}
+                    
+            {% endif %}
+        </div>
+        
+        {% for field in form %}
+
+            <p>
+                {% if field.errors %}
+                    <ul>
+                        
+                        {% for error in field.errors %}
+                            <li class="text-danger">{{error}}</li>
+                        {% endfor %}
+                            
+                    </ul>
+                {% endif %}
+
+                <!-- Non Field Error -->
+                {% if field.name == 'password1' and form.non_field_errors %}
+                    <ul>
+                        {% for error in form.non_field_errors %}
+                            <li class="text-danger">{{error}}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+                
+                <label for="{{field.id_for_label}}">{{field.label}}</label>
+                {{field}}    
+            </p>
+
+        {% endfor %}
+            
+        <button type="submit" class="block card_tab text-white mt-2">Sign Up</button>
+
+
+
+
+        <div class="mt-4 text-center">
+            <p class="inline">Already have an account?</p> <a href="{% url 'sign_in' %}" class="text-blue-500 hover:underline">Sign In</a>
+        </div>
+    </form>
+
+
+
+
+
+    <script>
+        setTimeout(function () {
+            const msg = document.getElementById("alert-msg");
+            msg.style.opacity = "0"; // 1. Start fading out
+
+            setTimeout(function () {
+                msg.style.display = "none"; // 2. Remove space after fade finishes
+            }, 500); // Matches duration-500 (0.5 seconds)
+        }, 3000); // Wait 3 seconds before fading
+    </script>
+
+</body>
+</html>

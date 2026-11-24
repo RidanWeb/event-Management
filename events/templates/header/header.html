@@ -26,6 +26,36 @@
                 <li><a href="/#events">Events</a></li>
                 <li><a href="/admin-dashboard">Dashboard</a></li>
                 <li><a href="/contact">Contact</a></li>
+                {% if user.is_authenticated %}
+                    <!-- User Profile Circle Dropdown -->
+                    <li class="relative">
+                        <button id="user-menu-btn" type="button"
+                                class="w-10 h-10 rounded-full bg-white text-[#3E0F8D] flex items-center justify-center hover:bg-gray-200 focus:outline-none cursor-pointer">
+                            <!-- Human Head SVG Icon -->
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
+                            </svg>
+                        </button>
+
+                        <!-- Dropdown Box (Hidden by default) -->
+                        <div id="user-dropdown"
+                             class="hidden absolute right-0 mt-2 w-48 bg-white text-gray-800 rounded-lg shadow-lg py-2 z-50">
+                            <div class="px-4 py-2 border-b border-gray-200 font-semibold text-sm text-[#3E0F8D]">
+                                {{ user.username }}
+                            </div>
+
+                            <form action="{% url 'logout' %}" method="POST">
+                                {% csrf_token %}
+                                <button type="submit" class="block px-4 py-2 text-sm text-red-600 w-full text-left">
+                                    Log Out
+                                </button>
+                            </form>    
+                        </div>
+                    </li>
+                {% else %}
+                    <li><a href="/users/sign_in">Sign In</a></li>
+                    <li><a href="/users/sign_up">Sign Up</a></li>
+                {% endif %}
             </ul>
 
             <!-- Simple Hamburger Button (Visible on mobile, hidden on desktop md+) -->
@@ -43,6 +73,36 @@
                 <li><a href="/#events" class="block w-full">Events</a></li>
                 <li><a href="/admin-dashboard" class="block w-full">Dashboard</a></li>
                 <li><a href="/contact" class="block w-full">Contact</a></li>
+                {% if user.is_authenticated %}
+                    <!-- User Profile Circle Dropdown -->
+                    <li class="relative">
+                        <button id="user-menu-btn" type="button"
+                                class="w-10 h-10 rounded-full bg-white text-[#3E0F8D] flex items-center justify-center hover:bg-gray-200 focus:outline-none cursor-pointer">
+                            <!-- Human Head SVG Icon -->
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
+                            </svg>
+                        </button>
+
+                        <!-- Dropdown Box (Hidden by default) -->
+                        <div id="user-dropdown"
+                             class="hidden absolute right-0 mt-2 w-48 bg-white text-gray-800 rounded-lg shadow-lg py-2 z-50">
+                            <div class="px-4 py-2 border-b border-gray-200 font-semibold text-sm text-[#3E0F8D]">
+                                {{ user.username }}
+                            </div>
+
+                            <form action="{% url 'logout' %}" method="POST">
+                                {% csrf_token %}
+                                <button type="submit" class="block px-4 py-2 text-sm text-red-600 w-full text-left">
+                                    Log Out
+                                </button>
+                            </form>    
+                        </div>
+                    </li>
+                {% else %}
+                    <li><a href="/users/sign_in">Sign In</a></li>
+                    <li><a href="/users/sign_up">Sign Up</a></li>
+                {% endif %}
             </ul>
         </div>
     </header>

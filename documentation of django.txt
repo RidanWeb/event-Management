@@ -274,6 +274,41 @@ $ pip freeze > requirements.txt
 import dj_database_url
 
 
+=================================
+||Admin:		       ||
+=================================
+
+http://127.0.0.1:8000/admin/
+
+
+In vscode terminal: python manage.py createsuperuser
+
+
+add some code event/ task app admin.py
+
+from events.models import Event, Category, Participant
+
+admin.site.register(Event)
+admin.site.register(Category)
+admin.site.register(Participant)
+
+to see all models in admin panel
+
+
+
+django authentication : https://docs.djangoproject.com/en/6.1/topics/auth/
+
+
+work in user app in view.py
+
+then in urls.py
+
+then include user urls.py in event_management urls.py
+
+
+
+
+
 
 
 

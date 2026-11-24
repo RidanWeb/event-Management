@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'events',
+    'users',
     "debug_toolbar",
 ]
 
@@ -166,5 +167,23 @@ STATICFILES_DIRS = [
 MAILERS = {
     'default': {
         'BACKEND': 'django.core.mail.backends.console.EmailBackend',
+        "HOST": "smtp.gmail.com",
+        "PORT": 587,
+        "USE_TLS": True,
+        "USER": "redankabir.cse@gmail.com",
+        "PASSWORD": "jzbu psch aimz fcxb",
     },
 }
+
+
+
+# jzbu psch aimz fcxb
+# redankabir.cse@gmail.com
+
+
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_USE_TLS = True
+# EMAIL_PORT = 587
+# EMAIL_HOST_USER = "redankabir.cse@gmail.com"
+# EMAIL_HOST_PASSWORD = "jzbu psch aimz fcxb"
