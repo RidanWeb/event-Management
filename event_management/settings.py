@@ -17,6 +17,8 @@ https://docs.djangoproject.com/en/6.1/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,7 +28,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-2x8%rgh7zu0nyem69g^0g5@yj23)6og$nzxwyy-=@69#b#j1l8'
+
+# from .env
+SECRET_KEY = config('SECRET_KEY', default='django-insecure-!@#&$%&^%$#@!$%^&*()_+')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -93,9 +97,9 @@ WSGI_APPLICATION = 'event_management.wsgi.application'
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'event_management',
+#         'NAME': config('DB_NAME', default='event_db_k37v'),
 #         'USER': 'postgres',
-#         'PASSWORD': '12345',
+#         'PASSWORD': config('DB_PASSWORD', default='ofP1KvFjw25Z0vl68Wqk1hXYokFT6TCy'),
 #         'HOST': 'localhost',
 #         'PORT': '5432'
 #     }
@@ -164,14 +168,17 @@ STATICFILES_DIRS = [
 # Email
 # https://docs.djangoproject.com/en/6.1/topics/email/#topic-email-configuration
 
+
 MAILERS = {
-    'default': {
-        'BACKEND': 'django.core.mail.backends.console.EmailBackend',
-        "HOST": "smtp.gmail.com",
-        "PORT": 587,
-        "USE_TLS": True,
-        "USER": "redankabir.cse@gmail.com",
-        "PASSWORD": "jzbu psch aimz fcxb",
+    "default": {
+        "BACKEND": "django.core.mail.backends.smtp.EmailBackend",
+        "OPTIONS": {
+            "host": "smtp.gmail.com",
+            "port": 587,
+            "use_tls": config("EMAIL_USE_TLS", default=True, cast=bool),
+            "username": "redankabir.cse@gmail.com",
+            "password": "jzbu psch aimz fcxb",
+        },
     },
 }
 

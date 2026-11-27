@@ -1,5 +1,5 @@
 from django.db import models
-from django.db.models.signals import post_save, pre_save
+from django.db.models.signals import post_save, pre_save, m2m_changed
 from django.dispatch import receiver
 from django.core.mail import send_mail
 
@@ -69,14 +69,30 @@ class Participant(models.Model):
     
     
     
-    @receiver(post_save, sender=Event)
-    def send_email_notification(sender, instance, created, **kwargs):
-        if created:
-            assigned_email = [participant.email for participant in instance.participants.all()]
+# @receiver(m2m_changed, sender=Event.participants.through)
+# def send_email_notification(sender, instance, action, **kwargs):
+#     if action == "post_add":
+#         assigned_email = [participant.email for participant in instance.participants.all()]
+#         send_mail(
+#             "New Event Created: {instance.name}",
+#             f"A new event has been created: {instance.name}.",
+#             "redankabir.cse@gmail.com",
+#             assigned_email,
+#             fail_silently=False, 
+#         )
+
+
+@receiver(post_save, sender=Event)
+def send_email_notification(sender, instance, created, **kwargs):
+    if created:
+        # Fetch all participants from the database
+        assigned_email = list(Participant.objects.values_list("email", flat=True))
+        
+        if assigned_email:  # Only send if there is at least 1 participant
             send_mail(
-                subject=f"New Event Created: {instance.name}",
-                message=f"A new event has been created: {instance.name}.",
-                from_email="redankabir.cse@gmail.com",
-                recipient_list=assigned_email,
+                f"New Event Created: {instance.name}",
+                f"A new event has been created: {instance.name}.",
+                "redankabir.cse@gmail.com",
+                assigned_email,
+                fail_silently=False,
             )
-            instance.save()
